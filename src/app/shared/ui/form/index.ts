@@ -1,0 +1,6 @@
+export { FormFieldComponent as FormField } from './form.component'
+export { FormItemComponent as FormItem } from './form.component'
+export { FormLabelComponent as FormLabel } from './form.component'
+export { FormControlComponent as FormControl } from './form.component'
+export { FormDescriptionComponent as FormDescription } from './form.component'
+export { FormMessageComponent as FormMessage } from './form.component'
