@@ -1,33 +1,29 @@
-import { headers } from 'next/headers'
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-import { getQueryClient } from '@/pkg/libraries/rest-api/service'
-import { auth } from '@/pkg/integrations/better-auth/auth.config'
 import { HomeModule, LandingModule } from '@/app/modules'
-import { notesListOptions } from '@/app/entities/api'
-import { FC } from 'react'
+import { auth } from '@/pkg/integrations/better-auth/auth.config'
+import { headers } from 'next/headers'
+import { FC, Suspense } from 'react'
 
 // interface
 interface IProps {}
 
-// component
-const HomePage: FC<Readonly<IProps>> = async (props) => {
+// content component
+const HomePageContent: FC = async () => {
   const headersList = await headers()
   const session = await auth.api.getSession({ headers: headersList })
 
-  // Show landing for unauthenticated users
   if (!session?.user) {
     return <LandingModule />
   }
 
-  // Prefetch notes data for authenticated users
-  const queryClient = getQueryClient()
-  await queryClient.prefetchQuery(notesListOptions())
+  return <HomeModule />
+}
 
-  // return
+// component
+const HomePage: FC<Readonly<IProps>> = (props) => {
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <HomeModule />
-    </HydrationBoundary>
+    <Suspense fallback={<div className='container mx-auto px-4 py-8 text-center'>Loading...</div>}>
+      <HomePageContent />
+    </Suspense>
   )
 }
 

@@ -1,13 +1,12 @@
-import type { QueryFunctionContext } from '@tanstack/react-query'
-import type { INote, ICreateNoteInput, IUpdateNoteInput } from '@/app/entities/models'
+import type { ICreateNoteInput, INote, IUpdateNoteInput } from '@/app/entities/models'
 import { localApiFetcher } from '@/pkg/libraries/rest-api/local-fetcher'
+import type { QueryFunctionContext } from '@tanstack/react-query'
 
 export const NotesApi = {
   async getAll(opt: QueryFunctionContext): Promise<INote[]> {
     return localApiFetcher
       .get<INote[]>('notes', {
         signal: opt.signal,
-        cache: 'no-store',
       })
       .json()
   },
@@ -16,7 +15,6 @@ export const NotesApi = {
     return localApiFetcher
       .get<INote>(`notes/${id}`, {
         signal: opt.signal,
-        cache: 'no-store',
       })
       .json()
   },

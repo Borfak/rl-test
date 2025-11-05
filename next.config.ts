@@ -7,7 +7,8 @@ const withNextIntl = createNextIntlPlugin("./src/pkg/libraries/locale/request.ts
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  
+  cacheComponents: true,
+
   logging: {
     fetches: {
       fullUrl: envServer.NODE_ENV !== 'production',

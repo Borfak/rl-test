@@ -1,7 +1,7 @@
 import { queryOptions, useMutation, useQueryClient, type QueryFunctionContext } from '@tanstack/react-query'
 
-import { NotesApi } from './notes.api'
 import type { ICreateNoteInput, IUpdateNoteInput } from '@/app/entities/models'
+import { NotesApi } from './notes.api'
 
 // options
 export const notesListOptions = () =>

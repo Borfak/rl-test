@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@/pkg/integrations/better-auth/auth.config'
 import { NotesRepository } from '@/app/entities/db/repositories'
+import { auth } from '@/pkg/integrations/better-auth/auth.config'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   try {

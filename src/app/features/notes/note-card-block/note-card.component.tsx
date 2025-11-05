@@ -34,6 +34,7 @@ const NoteCardComponent: FC<Readonly<IProps>> = (props) => {
     setIsEditOpen(false)
   }
 
+  // return
   return (
     <>
       <Card>

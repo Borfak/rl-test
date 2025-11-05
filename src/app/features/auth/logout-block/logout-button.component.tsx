@@ -12,6 +12,7 @@ interface IProps {
   className?: string
 }
 
+// component
 const LogoutButtonComponent: FC<Readonly<IProps>> = (props) => {
   const { variant = 'outline', size = 'default', className } = props
   const [isLoading, setIsLoading] = useState(false)
@@ -28,6 +29,7 @@ const LogoutButtonComponent: FC<Readonly<IProps>> = (props) => {
     }
   }
 
+  // return
   return (
     <Button onClick={handleLogout} variant={variant} size={size} className={className} disabled={isLoading}>
       {isLoading ? 'Signing out...' : 'Sign Out'}

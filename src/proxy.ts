@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware'
-import { routing } from './pkg/libraries/locale/routing'
 import { NextRequest, NextResponse } from 'next/server'
+import { routing } from './pkg/libraries/locale/routing'
 
 const handleI18nRouting = createMiddleware(routing)
 
@@ -12,7 +12,7 @@ export async function proxy(request: NextRequest) {
   }
 
   const publicRoutes = ['/', '/login', '/register']
-  
+
   const authRoutes = ['/login', '/register']
 
   const localePattern = /^\/(en|uk-UA)/
@@ -22,7 +22,7 @@ export async function proxy(request: NextRequest) {
     return pathWithoutLocale === route || pathWithoutLocale.startsWith(`${route}/`)
   })
 
-  const isAuthRoute = authRoutes.some((route) => 
+  const isAuthRoute = authRoutes.some((route) =>
     pathWithoutLocale === route || pathWithoutLocale.startsWith(`${route}/`)
   )
 

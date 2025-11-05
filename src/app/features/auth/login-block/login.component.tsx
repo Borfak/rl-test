@@ -1,14 +1,21 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/app/shared/ui'
-import { Button } from '@/app/shared/ui'
-import { Input } from '@/app/shared/ui'
-import { Label } from '@/app/shared/ui'
 import { AuthApi } from '@/app/entities/api'
-import { FC, useState } from 'react'
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Input,
+  Label,
+} from '@/app/shared/ui'
 import { Link, useRouter } from '@/pkg/libraries/locale'
 import { useTranslations } from 'next-intl'
+import { FC, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 // interface
 interface IProps {}
@@ -19,6 +26,7 @@ interface IFormData {
   password: string
 }
 
+// component
 const LoginComponent: FC<Readonly<IProps>> = (props) => {
   const {
     register,
@@ -37,7 +45,6 @@ const LoginComponent: FC<Readonly<IProps>> = (props) => {
     try {
       const result = await AuthApi.signIn({
         ...data,
-        callbackURL: `${window.location.origin}/`,
       })
 
       if (result.error) {
@@ -56,6 +63,7 @@ const LoginComponent: FC<Readonly<IProps>> = (props) => {
     }
   }
 
+  // return
   return (
     <Card className='w-full max-w-md'>
       <CardHeader>

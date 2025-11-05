@@ -1,76 +1,56 @@
 'use client'
 
-import { FC, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/shared/ui'
-import { NoteCardComponent, NoteFormComponent } from '@/app/features/notes'
 import { notesListOptions } from '@/app/entities/api'
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@/app/shared/ui'
+import { Link } from '@/pkg/libraries/locale'
+import { useQuery } from '@tanstack/react-query'
+import { FileText, Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { FC } from 'react'
 
 // interface
 interface IProps {}
 
 // component
 const HomeModule: FC<Readonly<IProps>> = (props) => {
-  const t = useTranslations('notes')
-  const [isCreateOpen, setIsCreateOpen] = useState(false)
-  const { data: notes, isPending, isError, error } = useQuery(notesListOptions())
+  const t = useTranslations('home')
+  const { data: notes } = useQuery(notesListOptions())
 
-  const handleCreateSuccess = () => {
-    setIsCreateOpen(false)
-  }
-
-  // Show loading state
-  if (isPending) {
-    return (
-      <div className='container mx-auto px-4 py-8'>
-        <div className='text-center'>{t('loading')}</div>
-      </div>
-    )
-  }
-
-  // Show error state
-  if (isError || !notes) {
-    return (
-      <div className='container mx-auto px-4 py-8'>
-        <div className='text-center text-red-500'>{error?.message || t('error')}</div>
-      </div>
-    )
-  }
-
-  // Ensure notes is an array
   const notesList = Array.isArray(notes) ? notes : []
+  const notesCount = notesList.length
 
   // return
   return (
     <div className='container mx-auto px-4 py-8'>
-      <div className='mb-8 flex items-center justify-between'>
-        <h1 className='text-3xl font-bold'>{t('myNotes')}</h1>
-        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger>
-            <Button>{t('createNote')}</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{t('createNote')}</DialogTitle>
-            </DialogHeader>
-            <NoteFormComponent onSuccess={handleCreateSuccess} onCancel={() => setIsCreateOpen(false)} />
-          </DialogContent>
-        </Dialog>
+      <div className='mb-8'>
+        <h1 className='text-4xl font-bold'>{t('welcome')}</h1>
+        <p className='text-muted-foreground mt-2 text-lg'>{t('dashboardDescription')}</p>
       </div>
 
-      {notesList.length === 0 ? (
-        <div className='py-12 text-center'>
-          <p className='text-muted-foreground mb-4'>{t('noNotes')}</p>
-          <Button onClick={() => setIsCreateOpen(true)}>{t('createFirstNote')}</Button>
-        </div>
-      ) : (
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-          {notesList.map((note) => (
-            <NoteCardComponent key={note.id} note={note} />
-          ))}
-        </div>
-      )}
+      <div className='mb-8 grid grid-cols-1 gap-4 md:grid-cols-3'>
+        <Card>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>{t('totalNotes')}</CardTitle>
+            <FileText className='text-muted-foreground h-4 w-4' />
+          </CardHeader>
+          <CardContent>
+            <div className='text-2xl font-bold'>{notesCount}</div>
+            <p className='text-muted-foreground text-xs'>{t('notesSubtitle')}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>{t('quickAction')}</CardTitle>
+            <Plus className='text-muted-foreground h-4 w-4' />
+          </CardHeader>
+          <CardContent>
+            <Link href='/notes'>
+              <Button className='w-full'>{t('viewNotes')}</Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

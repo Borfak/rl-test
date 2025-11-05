@@ -1,14 +1,21 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/app/shared/ui'
-import { Button } from '@/app/shared/ui'
-import { Input } from '@/app/shared/ui'
-import { Label } from '@/app/shared/ui'
 import { AuthApi } from '@/app/entities/api'
-import { FC, useState } from 'react'
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Input,
+  Label,
+} from '@/app/shared/ui'
 import { Link, useRouter } from '@/pkg/libraries/locale'
 import { useTranslations } from 'next-intl'
+import { FC, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 // interface
 interface IProps {}
@@ -45,7 +52,6 @@ const RegisterComponent: FC<Readonly<IProps>> = (props: IProps) => {
         name: data.name,
         email: data.email,
         password: data.password,
-        callbackURL: `${window.location.origin}/`,
       })
 
       if (result.error) {
